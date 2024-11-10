@@ -1,6 +1,7 @@
 import pygame
 import sys
 from constants import *
+from player import Player
 
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -14,6 +15,9 @@ font = pygame.font.Font(None, 74)
 print(f"Starting asteroids!")
 print(f"Screen width: {SCREEN_WIDTH}")
 print(f"Screen height: {SCREEN_HEIGHT}")
+
+# instantiate the player
+player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
 paused = False
 
@@ -47,9 +51,11 @@ while True:
 
     if not paused:
         # Update game logic only if not paused
+        player.draw(screen)
         pygame.display.flip()
         screen.fill((0, 0, 0))
         dt = clock.tick(60) / 1000
+        
     else:
         # render paused screen
         paused_text = font.render('Paused', True, (255, 255, 255))
