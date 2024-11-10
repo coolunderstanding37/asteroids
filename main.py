@@ -5,6 +5,9 @@ pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Asteroids')
 
+clock = pygame.time.Clock()
+dt = clock.tick(60) / 1000
+
 font = pygame.font.Font(None, 74)
 
 print(f"Starting asteroids!")
@@ -43,6 +46,7 @@ while True:
         # Update game logic only if not paused
         pygame.display.flip()
         screen.fill((0, 0, 0))
+        dt = clock.tick(60) / 1000
     else:
         # render paused screen
         paused_text = font.render('Paused', True, (255, 255, 255))
@@ -60,6 +64,4 @@ while True:
         quit_text = font.render('Quit', True, (0, 0, 0))
         screen.blit(resume_text, (resume_button.x + 50, resume_button.y + 8))
         screen.blit(quit_text, (quit_button.x + 60, quit_button.y + 8))
-
-    
 
