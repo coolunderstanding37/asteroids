@@ -1,4 +1,5 @@
 import pygame
+import sys
 from constants import *
 
 pygame.init()
@@ -19,7 +20,8 @@ paused = False
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            exit()
+            pygame.quit()
+            sys.exit()
 
         # Toggle paused state
         if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
@@ -33,7 +35,8 @@ while True:
                 paused = False
 
             if quit_button.collidepoint(mouse_pos):
-                exit()
+                pygame.quit()
+                sys.exit()
 
         # Handle active event to toggle paused state
         if event.type == pygame.ACTIVEEVENT:
