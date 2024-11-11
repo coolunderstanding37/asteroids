@@ -10,6 +10,10 @@ pygame.display.set_caption('Asteroids')
 clock = pygame.time.Clock()
 dt = clock.tick(60) / 1000
 
+# Create groups for updating and drawing
+updatable = pygame.sprite.Group()
+drawable = pygame.sprite.Group()
+
 font = pygame.font.Font(None, 74)
 
 print(f"Starting asteroids!")
@@ -18,6 +22,9 @@ print(f"Screen height: {SCREEN_HEIGHT}")
 
 # instantiate the player
 player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+# add player to both groups
+updatable.add(player)
+drawable.add(player)
 
 paused = False
 
@@ -51,10 +58,19 @@ while True:
 
     if not paused:
         # Update game logic only if not paused
-        player.draw(screen)
-        pygame.display.flip()
+        # Clear the screen
         screen.fill((0, 0, 0))
-        player.update(dt)
+        
+        # Update all updatables
+        for sprite in updatable:
+            sprite.update(dt)  # Ensure 'dt' is your delta time for smooth movement
+
+        # Call the draw methods of drawable sprites
+        for sprite in drawable:
+            sprite.draw(screen)
+        
+        # Refresh the display
+        pygame.display.flip()
         dt = clock.tick(60) / 1000
         
     else:

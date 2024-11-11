@@ -2,11 +2,15 @@ import pygame
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED
 from circleshape import *
 
-class Player(CircleShape):
+class Player(CircleShape, pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0   # initializes rotation attribute
-
+        # placeholder image
+        self.image = pygame.Surface((1, 1), pygame.SRCALPHA)
+        # placehgolder rect
+        self.rect = self.image.get_rect(center=(x, y))
+        
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
