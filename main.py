@@ -70,8 +70,6 @@ while True:
         if event.type == pygame.ACTIVEEVENT:
             if event.gain == 0:    # window not active - pause game
                 paused = True
-            if event.gain == 1:    # window is active - game not paused
-                paused = False
 
     if not paused:
         # Update game logic only if not paused
@@ -110,6 +108,15 @@ while True:
         # Add button text
         resume_text = font.render('Resume', True, (0, 0, 0))
         quit_text = font.render('Quit', True, (0, 0, 0))
-        screen.blit(resume_text, (resume_button.x + 50, resume_button.y + 8))
-        screen.blit(quit_text, (quit_button.x + 60, quit_button.y + 8))
 
+        # Calculate position to center text within each button
+        resume_text_x = resume_button.x + (resume_button.width - resume_text.get_width()) // 2
+        resume_text_y = resume_button.y + (resume_button.height - resume_text.get_height()) // 2
+        screen.blit(resume_text, (resume_text_x, resume_text_y))
+
+        quit_text_x = quit_button.x + (quit_button.width - quit_text.get_width()) // 2
+        quit_text_y = quit_button.y + (quit_button.height - quit_text.get_height()) // 2
+        screen.blit(quit_text, (quit_text_x, quit_text_y))
+        
+        # update screen
+        pygame.display.flip()
