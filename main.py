@@ -82,6 +82,12 @@ while True:
         for sprite in updatable:
             sprite.update(dt)  # Ensure 'dt' is your delta time for smooth movement
 
+        # iterate through asteroids
+        for rock in asteroids:
+            if rock.collision(player):
+                print("GAME OVER!")
+                sys.exit()
+
         # Call the draw methods of drawable sprites
         for sprite in drawable:
             sprite.draw(screen)
