@@ -4,23 +4,30 @@ from constants import *
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from shot import Shot
 
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 font = pygame.font.Font(None, 74)
 pygame.display.set_caption('Asteroids')
 
+print(f"Starting asteroids!")
+print(f"Screen width: {SCREEN_WIDTH}")
+print(f"Screen height: {SCREEN_HEIGHT}")
+
 clock = pygame.time.Clock()
 dt = clock.tick(60) / 1000
 
-# Create groups for updating and drawing
+# Create groups
 asteroids = pygame.sprite.Group()
 updatable = pygame.sprite.Group()
 drawable = pygame.sprite.Group()
+shots = pygame.sprite.Group()
 
 # set containers in the Asteroid class definition
 Asteroid.containers = (asteroids, updatable, drawable)
 AsteroidField.containers = (updatable)
+Shot.containers = (shots, updatable, drawable)
 
 # Example values before creating an asteroid instance
 x = 100  # Initial x-coordinate
@@ -28,12 +35,14 @@ y = 150  # Initial y-coordinate
 radius = 30  # Radius of the asteroid
 initial_velocity = pygame.Vector2(1, 1)  # Starting velocity vector
 
-print(f"Starting asteroids!")
-print(f"Screen width: {SCREEN_WIDTH}")
-print(f"Screen height: {SCREEN_HEIGHT}")
-
 # instantiate the player
-player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+player = Player(
+    SCREEN_WIDTH / 2,
+    SCREEN_HEIGHT / 2,
+    shots,
+    updatable,
+    drawable
+    )
 
 #instantiate the asteroid instances
 asteroid = Asteroid(x, y, radius, initial_velocity)
