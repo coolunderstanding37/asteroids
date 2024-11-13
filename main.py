@@ -1,5 +1,6 @@
 import pygame
 import sys
+import random
 from constants import *
 from player import Player
 from asteroid import Asteroid
@@ -29,11 +30,25 @@ Asteroid.containers = (asteroids, updatable, drawable)
 AsteroidField.containers = (updatable)
 Shot.containers = (shots, updatable, drawable)
 
-# Example values before creating an asteroid instance
-x = 100  # Initial x-coordinate
-y = 150  # Initial y-coordinate
-radius = 30  # Radius of the asteroid
-initial_velocity = pygame.Vector2(1, 1)  # Starting velocity vector
+# Create multiple asteroids
+for _ in range(4):  # Create 4 asteroids (or however many you want)
+    # Random position that's not too close to the player
+    while True:
+        x = random.randrange(0, SCREEN_WIDTH)
+        y = random.randrange(0, SCREEN_HEIGHT)
+        # Check if this position is far enough from player
+        if abs(x - SCREEN_WIDTH/2) > 100 and abs(y - SCREEN_HEIGHT/2) > 100:
+            break
+    
+    # Random velocity
+    velocity = pygame.Vector2(
+        random.uniform(-100, 100),
+        random.uniform(-100, 100)
+    )
+    
+    # Create the asteroid (it will automatically add to groups because of containers)
+    initial_velocity = pygame.Vector2(random.uniform(-1, 1), random.uniform(-1, 1))
+    Asteroid(x, y, ASTEROID_MAX_RADIUS, initial_velocity)
 
 # instantiate the player
 player = Player(
@@ -45,7 +60,7 @@ player = Player(
     )
 
 #instantiate the asteroid instances
-asteroid = Asteroid(x, y, radius, initial_velocity)
+asteroid = Asteroid(x, y, ASTEROID_MAX_RADIUS, initial_velocity)
 asteroid.velocity = initial_velocity
 
 # add player to both groups
