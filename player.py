@@ -1,5 +1,5 @@
 import pygame
-from constants import SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN
 from circleshape import *
 from shot import Shot
 
@@ -10,6 +10,7 @@ class Player(CircleShape, pygame.sprite.Sprite):
         self.shots = shots
         self.updatable = updatable
         self.drawable = drawable
+        self.timer = 0    
 
         # placeholder image
         self.image = pygame.Surface((1, 1), pygame.SRCALPHA)
@@ -64,9 +65,11 @@ class Player(CircleShape, pygame.sprite.Sprite):
         if keys[pygame.K_s]:
             self.move(-dt)
 
-        # Shoot
-        if keys[pygame.K_SPACE]:
+        # shooting cooldown and timer
+        self.timer -= dt
+        if keys[pygame.K_SPACE] and self.timer <= 0:
             self.shoot()
+            self.timer = PLAYER_SHOOT_COOLDOWN
 
         # player wrap around screen
         if self.position.x > SCREEN_WIDTH:
