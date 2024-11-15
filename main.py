@@ -109,6 +109,10 @@ while True:
             if rock.collision(player):
                 print("GAME OVER!")
                 sys.exit()
+            for bullet in shots:
+                if rock.collision(bullet):
+                    rock.split()
+                    bullet.kill()
 
         # Call the draw methods of drawable sprites
         for sprite in drawable:
