@@ -23,12 +23,12 @@ class Asteroid(CircleShape):
         # calculate new radius
         new_radius = self.radius - ASTEROID_MIN_RADIUS
         # create two new velocity vectors by rotating the current velocity
-        new_velocity1 = self.velocity.rotate(random_angle)
-        new_velocity2 = self.velocity.rotate(-random_angle)
+        new_velocity1 = self.velocity.rotate(random_angle) * 1.2
+        new_velocity2 = self.velocity.rotate(-random_angle) * 1.2
         
         # create new asteroids
-        new_asteroid1 = Asteroid(self.position.x, self.position.y, new_radius, new_velocity1 * 1.2)
-        new_asteroid2 = Asteroid(self.position.x, self.position.y, new_radius, new_velocity2 * 1.2)
+        new_asteroid1 = Asteroid(self.position.x, self.position.y, new_radius, new_velocity1)
+        new_asteroid2 = Asteroid(self.position.x, self.position.y, new_radius, new_velocity2)
         
         # add them to the same groups as the original asteroid
         for group in self.groups():
